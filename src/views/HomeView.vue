@@ -29,16 +29,11 @@ const store = usePlaceholderStore()
 const { placeholderItems, isLoading, isError, hasMore } = storeToRefs(store)
 const { fetchPlaceholderItems } = store
 
-// Initial load
 onMounted(() => {
   fetchPlaceholderItems(true)
 })
 
-/**
- * Infinite scroll on the window.
- * It will call fetchPlaceholderItems() when the user is within 300px of the bottom,
- * but only if not already isLoading and there are more pages.
- */
+
 useInfiniteScroll(
   window,
   async () => {
@@ -47,11 +42,12 @@ useInfiniteScroll(
     }
   },
   {
-    distance: 500,                       // start isLoading a bit before the bottom
-    interval: 200,                       // poll interval (ms) – lightweight
-    canLoadMore: () => hasMore.value,    // stop automatically at the end
+    distance: 300,
+    interval: 200,
+    canLoadMore: () => hasMore.value
   }
 )
+
 </script>
 
 <style scoped lang="scss">
