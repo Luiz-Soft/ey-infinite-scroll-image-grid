@@ -1,0 +1,19 @@
+{
+  "title": "Explorador Disney",
+  "searchPlaceholder": "Buscar personajes...",
+  "emptyContent": "No hay contenido para mostrar 😢",
+  "paginationPrev": "⬅ Anterior",
+  "paginationPageInfo": "Página {page} de {totalPages}",
+  "paginationNext": "Siguiente ➡",
+  "characterDetails": {
+    "films": "🎬 Películas",
+    "shortFilms": "🎞️ Cortometrajes",
+    "tvShows": "📺 Series de TV",
+    "videoGames": "🎮 Videojuegos",
+    "parkAttractions": "🎢 Atracciones del parque",
+    "allies": "🧑‍🤝‍🧑 Aliados",
+    "enemies": "😈 Enemigos",
+    "loading": "Cargando...",
+    "errorRetry": "Ocurrió un error, haz clic para intentarlo de nuevo"
+  }
+}

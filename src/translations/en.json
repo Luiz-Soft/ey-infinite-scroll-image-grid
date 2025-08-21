@@ -1,0 +1,19 @@
+{
+  "title": "Disney Explorer",
+  "searchPlaceholder": "Search characters...",
+  "emptyContent":"No content to display 😢",
+  "paginationPrev": "⬅ Prev",
+  "paginationPageInfo": "Page {page} of {totalPages}",
+  "paginationNext": "Next ➡",
+  "characterDetails": {
+    "films": "🎬 Films",
+    "shortFilms": "🎞️ Short Films",
+    "tvShows": "📺 TV Shows",
+    "videoGames": "🎮 Video Games",
+    "parkAttractions": "🎢 Park Attractions",
+    "allies": "🧑‍🤝‍🧑 Allies",
+    "enemies": "😈 Enemies",
+    "loading": "Loading...",
+    "errorRetry": "An error occurred, click to try again"
+  }
+}
