@@ -1,94 +1,71 @@
 <template>
-  <div class="home">
-    <LoadingSpinner v-if="loading" />
+  <section>
+    <h1>Home View</h1>
 
-    <div v-else-if="isError" class="home__error" @click="characterStore.searchCharacters">
-      <p>{{ $t('characterDetails.errorRetry') }}</p>
-    </div>
+    <!-- (Optional) manual trigger for testing -->
+    <button @click="fetchPlaceholderItems()" :disabled="loading || !hasMore">
+      {{ loading ? 'Loading…' : hasMore ? 'Load more' : 'No more items' }}
+    </button>
 
-    <div v-else-if="characters.length === 0" class="home__empty">
-      <p>{{ $t('emptyContent') }}</p>
-    </div>
+    <div v-if="isError">❌ Error loading items</div>
 
-    <div v-else>
-      <div class="home__grid">
-        <CharacterCard
-          v-for="character in characters"
-          :key="character._id"
-          :name="character.name"
-          :image-url="character.imageUrl"
-          @click="(e) => onCardClick(e, character._id)"
-        />
-      </div>
-      <Pagination />
-    </div>
-  </div>
+    <ul v-else>
+      <li v-for="item in placeholderItems" :key="item.id">
+        <strong>{{ item.id }}</strong> – {{ item.title }}
+      </li>
+    </ul>
+
+    <!-- sentinel observed by IntersectionObserver -->
+    <div ref="infiniteTrigger" style="height: 1px;"></div>
+
+    <p v-if="loading" style="margin-top:.75rem;">Loading…</p>
+    <p v-else-if="!hasMore" style="margin-top:.75rem;">You’ve reached the end 🎉</p>
+  </section>
 </template>
 
 <script setup lang="ts">
-import CharacterCard from '@/components/CharacterCard.vue'
-import Pagination from '@/components/Pagination.vue'
-import LoadingSpinner from '@/components/LoadingSpinner.vue'
-import { useCharacterStore } from '@/stores/characterStore'
+import { onMounted, onBeforeUnmount, ref } from 'vue'
 import { storeToRefs } from 'pinia'
-import { useRouter, type Router } from 'vue-router'
-import confetti from 'canvas-confetti'
+import { usePlaceholderStore } from '@/stores/placeholderStore'
 
-const characterStore = useCharacterStore()
-const {
-  results: characters,
-  loading,
-  isError,
-} = storeToRefs(characterStore)
+const store = usePlaceholderStore()
+const { placeholderItems, loading, isError, hasMore } = storeToRefs(store)
+const { fetchPlaceholderItems } = store
 
-const router: Router = useRouter()
+const infiniteTrigger = ref<HTMLElement | null>(null)
+let observer: IntersectionObserver | null = null
 
-const onCardClick = (event: MouseEvent, id: number): void => {
-  const target = event.currentTarget as HTMLElement
-  const rect = target.getBoundingClientRect()
+onMounted(() => {
+  // initial load (reset = true)
+  fetchPlaceholderItems(true)
 
-  const x = (rect.left + rect.width / 2) / window.innerWidth
-  const y = (rect.top + rect.height / 2) / window.innerHeight
+  observer = new IntersectionObserver(
+    (entries) => {
+      const entry = entries[0]
+      if (entry.isIntersecting) {
+        // Next page
+        fetchPlaceholderItems()
+      }
+    },
+    {
+      root: null,
+      rootMargin: '200px', // prefetch before reaching bottom
+      threshold: 0,
+    }
+  )
 
-  confetti({
-    particleCount: 100,
-    spread: 70,
-    origin: { x, y },
-  })
+  if (infiniteTrigger.value) {
+    observer.observe(infiniteTrigger.value)
+  }
+})
 
-  router.push({ name: 'CharacterDetails', params: { id } })
-}
+onBeforeUnmount(() => {
+  observer?.disconnect()
+  observer = null
+})
 </script>
 
 <style scoped lang="scss">
-.home {
-  padding: 2rem;
-
-  &__grid {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 1.5rem;
-    justify-content: center;
-  }
-
-  &__empty,
-  &__error {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 300px;
-    font-size: 1.5rem;
-    font-weight: bold;
-    font-family: 'Comic Sans MS', 'Baloo 2', cursive;
-    text-shadow: 1px 1px #fff;
-  }
-
-  &__empty {
-    color: #ff69b4;
-  }
-
-  &__error {
-    color: #ff4d4d;
-  }
-}
+ul { margin-top: 1rem; list-style: none; padding: 0; }
+li { margin: .5rem 0; }
 </style>

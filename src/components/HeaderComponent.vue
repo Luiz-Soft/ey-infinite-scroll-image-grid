@@ -25,7 +25,7 @@
 </template>
 
 <script lang="ts" setup>
-import { useCharacterStore } from '@/stores/characterStore'
+import { useCharacterStore } from '@/stores/placeholderStore'
 import { useI18n } from 'vue-i18n'
 import { storeToRefs } from 'pinia'
 import { onMounted } from 'vue'
