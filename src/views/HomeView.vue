@@ -47,7 +47,7 @@ useInfiniteScroll(
     }
   },
   {
-    distance: 300,                       // start loading a bit before the bottom
+    distance: 500,                       // start loading a bit before the bottom
     interval: 200,                       // poll interval (ms) – lightweight
     canLoadMore: () => hasMore.value,    // stop automatically at the end
   }
