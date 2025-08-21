@@ -2,11 +2,11 @@
   <section>
     <h1>Home View</h1>
 
-    <button @click="fetchPlaceholderItems()" :disabled="loading || !hasMore">
-      {{ loading ? 'Loading…' : hasMore ? 'Load more' : 'No more items' }}
+    <button @click="fetchPlaceholderItems()" :disabled="isLoading || !hasMore">
+      {{ isLoading ? 'Loading…' : hasMore ? 'Load more' : 'No more items' }}
     </button>
 
-    <div v-if="isError">❌ Error loading items</div>
+    <div v-if="isError">❌ Error isLoading items</div>
 
     <ul v-else>
       <li v-for="item in placeholderItems" :key="item.id">
@@ -14,7 +14,7 @@
       </li>
     </ul>
 
-    <p v-if="loading" style="margin-top:.75rem;">Loading…</p>
+    <p v-if="isLoading" style="margin-top:.75rem;">Loading…</p>
     <p v-else-if="!hasMore" style="margin-top:.75rem;">You’ve reached the end 🎉</p>
   </section>
 </template>
@@ -26,7 +26,7 @@ import { useInfiniteScroll } from '@vueuse/core'
 import { usePlaceholderStore } from '@/stores/placeholderStore'
 
 const store = usePlaceholderStore()
-const { placeholderItems, loading, isError, hasMore } = storeToRefs(store)
+const { placeholderItems, isLoading, isError, hasMore } = storeToRefs(store)
 const { fetchPlaceholderItems } = store
 
 // Initial load
@@ -37,17 +37,17 @@ onMounted(() => {
 /**
  * Infinite scroll on the window.
  * It will call fetchPlaceholderItems() when the user is within 300px of the bottom,
- * but only if not already loading and there are more pages.
+ * but only if not already isLoading and there are more pages.
  */
 useInfiniteScroll(
   window,
   async () => {
-    if (!loading.value && hasMore.value) {
+    if (!isLoading.value && hasMore.value) {
       await fetchPlaceholderItems()
     }
   },
   {
-    distance: 500,                       // start loading a bit before the bottom
+    distance: 500,                       // start isLoading a bit before the bottom
     interval: 200,                       // poll interval (ms) – lightweight
     canLoadMore: () => hasMore.value,    // stop automatically at the end
   }

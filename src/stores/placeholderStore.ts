@@ -1,13 +1,9 @@
-// stores/placeholderStore.ts
 import { defineStore } from 'pinia'
 import { ref, type Ref } from 'vue'
-import {
-  getPlaceholderItems,
-  type PlaceholderItem,
-} from '@/services/placeholderService'
+import { getPlaceholderItems, type PlaceholderItem } from '@/services/placeholderService'
 
 export const usePlaceholderStore = defineStore('placeholder', () => {
-  const loading: Ref<boolean> = ref(false)
+  const isLoading: Ref<boolean> = ref(false)
   const isError: Ref<boolean> = ref(false)
   const placeholderItems: Ref<PlaceholderItem[]> = ref([])
 
@@ -15,9 +11,8 @@ export const usePlaceholderStore = defineStore('placeholder', () => {
   const itemsPerPage: Ref<number> = ref(20)
   const hasMore: Ref<boolean> = ref(true)
 
-  // reset = true when you want to reload from page 1
   const fetchPlaceholderItems = async (reset = false): Promise<void> => {
-    if (loading.value || !hasMore.value && !reset) return
+    if (isLoading.value || (!hasMore.value && !reset)) return
 
     if (reset) {
       page.value = 1
@@ -25,36 +20,32 @@ export const usePlaceholderStore = defineStore('placeholder', () => {
       placeholderItems.value = []
     }
 
-    loading.value = true
+    isLoading.value = true
     isError.value = false
 
     try {
-      const items = await getPlaceholderItems(page.value, itemsPerPage.value)
+      const { items, totalCount } = await getPlaceholderItems(page.value, itemsPerPage.value)
 
-      // Append new page
-      placeholderItems.value = placeholderItems.value.concat(items)
+      placeholderItems.value.push(...items)
 
-      // If we got less than requested, no more pages
-      if (items.length < itemsPerPage.value) hasMore.value = false
+      hasMore.value = placeholderItems.value.length < totalCount
 
       page.value += 1
     } catch (err) {
       console.error('Error fetching placeholder items:', err)
       isError.value = true
     } finally {
-      loading.value = false
+      isLoading.value = false
     }
   }
 
   return {
-    // state
-    loading,
+    isLoading,
     isError,
     placeholderItems,
     page,
     itemsPerPage,
     hasMore,
-    // actions
     fetchPlaceholderItems,
   }
 })
