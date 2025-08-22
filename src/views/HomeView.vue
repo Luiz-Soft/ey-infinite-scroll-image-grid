@@ -11,8 +11,14 @@
       />
     </div>
 
-    <div v-if="isError" class="home__status home__status--error">
-      {{ t('home.error') }}
+    <div
+      v-if="isError"
+      class="home__status home__status--error"
+      role="button"
+      tabindex="0"
+      @click="fetchPicsumItems()"
+    >
+      {{ t('home.error') }} 
     </div>
     <p v-if="isLoading" class="home__status home__status--loading">
       {{ t('home.loading') }}
@@ -50,7 +56,6 @@ useInfiniteScroll(
 )
 </script>
 
-
 <style scoped lang="scss">
 .home {
   padding: 1rem;
@@ -79,7 +84,7 @@ useInfiniteScroll(
 
     &--loading { color: #4b5563; }
     &--end     { color: #065f46; font-weight: 600; }
-    &--error   { color: #991b1b; font-weight: 600; }
+    &--error   { color: #991b1b; font-weight: 600; text-decoration: underline; cursor: pointer; }
   }
 }
 </style>

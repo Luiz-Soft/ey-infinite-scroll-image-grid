@@ -6,8 +6,8 @@
   },
     "home": {
     "title": "Home",
-    "error": "❌ Error loading items",
+    "error": "Error loading items. Click to retry",
     "loading": "Loading…",
-    "end": "You’ve reached the end 🎉"
+    "end": "You’ve reached the end "
   }
 }
