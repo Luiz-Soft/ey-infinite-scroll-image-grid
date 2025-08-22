@@ -2,15 +2,15 @@
   <section class="home">
     <h1 class="home__title">{{ t('home.title') }}</h1>
 
-    <div class="home__grid">
+    <transition-group name="card-fade" tag="div" class="home__grid">
       <card-component
         v-for="item in picsumItems"
         :key="item.id"
         :id="item.id"
         :title="item.author"
-        @remove="removeItemById(item.id)"
+         @remove="removeItemById(item.id)"
       />
-    </div>
+    </transition-group>
 
     <div
       v-if="isError"
@@ -19,7 +19,7 @@
       tabindex="0"
       @click="fetchPicsumItems()"
     >
-      {{ t('home.error') }} 
+      {{ t('home.error') }}
     </div>
     <p v-if="isLoading" class="home__status home__status--loading">
       {{ t('home.loading') }}
@@ -29,6 +29,7 @@
     </p>
   </section>
 </template>
+
 
 <script setup lang="ts">
 import { onMounted } from 'vue'
@@ -87,5 +88,16 @@ useInfiniteScroll(
     &--end     { color: #065f46; font-weight: 600; }
     &--error   { color: #991b1b; font-weight: 600; text-decoration: underline; cursor: pointer; }
   }
+}
+
+.card-fade-leave-active {
+  transition: all 0.4s ease;
+}
+.card-fade-leave-to {
+  opacity: 0;
+  transform: scale(0.9);
+}
+.card-fade-move {
+  transition: none;
 }
 </style>

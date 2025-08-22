@@ -19,10 +19,7 @@ export interface PicsumResponse {
   hasMore: boolean
 }
 
-export async function getPicsumItems(
-  page = 1,
-  pageSize = 20
-): Promise<PicsumResponse> {
+export async function getPicsumItems( page = 1, pageSize = 20 ): Promise<PicsumResponse> {
   try {
     const res = await api.get<PicsumItem[]>(`/v2/list?page=${page}&limit=${pageSize}`)
 
