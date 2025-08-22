@@ -8,6 +8,7 @@
         :key="item.id"
         :id="item.id"
         :title="item.author"
+        @remove="removeItemById(item.id)"
       />
     </div>
 
@@ -41,7 +42,7 @@ const { t } = useI18n()
 
 const store = usePicsumStore()
 const { picsumItems, isLoading, isError, hasMore } = storeToRefs(store)
-const { fetchPicsumItems } = store
+const { fetchPicsumItems, removeItemById } = store
 
 onMounted(() => {
   fetchPicsumItems(true)

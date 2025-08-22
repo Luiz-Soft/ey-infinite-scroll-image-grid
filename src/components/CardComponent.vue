@@ -1,5 +1,14 @@
 <template>
   <div class="card">
+    <button
+      class="card__close"
+      type="button"
+      aria-label="Remove card"
+      @click="handleRemove"
+    >
+      ×
+    </button>
+
     <div class="card__media">
       <div v-if="!loaded && !error" class="card__placeholder">{{ t('card.loading') }}</div>
 
@@ -38,13 +47,15 @@
 import { ref, nextTick, computed } from 'vue'
 import { useI18n } from 'vue-i18n'
 
+const emit = defineEmits<{
+  (e: 'remove'): void
+}>()
+
 interface Props {
   title: string
   id: string
 }
-
 const { title, id } = defineProps<Props>()
-
 const { t } = useI18n()
 
 const loaded = ref(false)
@@ -52,10 +63,7 @@ const error = ref(false)
 const showImg = ref(true)
 
 const baseUrl = import.meta.env.VITE_PICSUM_API_URL
-
-const thumbnailUrl = computed(() => {
-  return `${baseUrl}/id/${id}/150/150`
-})
+const thumbnailUrl = computed(() => `${baseUrl}/id/${id}/150/150`)
 
 const onLoad = async (e: Event) => {
   const img = e.target as HTMLImageElement
@@ -76,10 +84,16 @@ const retryImage = async () => {
   await nextTick()
   showImg.value = true
 }
+
+const handleRemove = () => {
+  emit('remove')
+}
 </script>
+
 
 <style scoped lang="scss">
 .card {
+  position: relative;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -89,12 +103,27 @@ const retryImage = async () => {
   border: 1px solid #0000002b;
   border-radius: 12px;
   transition: transform .2s ease, box-shadow .2s ease, border-color .2s ease;
-  cursor: pointer;
 
   &:hover {
     transform: translateY(-4px);
     box-shadow: 0 4px 12px rgba(0,0,0,.1);
     border-color: #d1d5db;
+  }
+
+  &__close {
+    position: absolute;
+    top: 0.4rem;
+    right: 0.4rem;
+    background: transparent;
+    border: none;
+    font-size: 1.2rem;
+    line-height: 1;
+    cursor: pointer;
+    color: #6b7280;
+
+    &:hover {
+      color: #111;
+    }
   }
 
   &__media {
