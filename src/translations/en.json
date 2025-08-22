@@ -5,9 +5,10 @@
     "retry": "Click to retry"
   },
     "home": {
-    "title": "Home",
-    "error": "Error loading items. Click to retry",
-    "loading": "Loading…",
-    "end": "You’ve reached the end "
+     "title": "Home",
+     "error": "Error loading items. Click to retry",
+     "loading": "Loading…",
+     "end": "You’ve reached the end ",
+     "empty": "No items to display. Click to load more"
   }
 }

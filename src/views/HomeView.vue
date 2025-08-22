@@ -2,15 +2,30 @@
   <section class="home">
     <h1 class="home__title">{{ t('home.title') }}</h1>
 
-    <transition-group name="card-fade" tag="div" class="home__grid">
+    <transition-group
+      v-if="picsumItems.length"
+      name="card-fade"
+      tag="div"
+      class="home__grid"
+    >
       <card-component
         v-for="item in picsumItems"
         :key="item.id"
         :id="item.id"
         :title="item.author"
-         @remove="removeItemById(item.id)"
+        @remove="removeItemById(item.id)"
       />
     </transition-group>
+
+    <div
+      v-else-if="!isLoading && !isError"
+      class="home__status home__status--empty"
+      role="button"
+      tabindex="0"
+      @click="fetchPicsumItems(true)"
+    >
+     {{ t('home.empty') }}
+    </div>
 
     <div
       v-if="isError"
@@ -21,10 +36,12 @@
     >
       {{ t('home.error') }}
     </div>
+
     <p v-if="isLoading" class="home__status home__status--loading">
       {{ t('home.loading') }}
     </p>
-    <p v-else-if="!hasMore" class="home__status home__status--end">
+
+    <p v-else-if="!hasMore && picsumItems.length" class="home__status home__status--end">
       {{ t('home.end') }}
     </p>
   </section>
@@ -87,6 +104,8 @@ useInfiniteScroll(
     &--loading { color: #4b5563; }
     &--end     { color: #065f46; font-weight: 600; }
     &--error   { color: #991b1b; font-weight: 600; text-decoration: underline; cursor: pointer; }
+    &--empty   { color: #374151; font-weight: 500; cursor: pointer; }
+
   }
 }
 
