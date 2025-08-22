@@ -112,8 +112,8 @@ const handleRemove = () => {
 
   &__close {
     position: absolute;
-    top: 0.4rem;
-    right: 0.4rem;
+    top: 0.1rem;
+    right: 0.1rem;
     background: transparent;
     border: none;
     font-size: 1.2rem;
