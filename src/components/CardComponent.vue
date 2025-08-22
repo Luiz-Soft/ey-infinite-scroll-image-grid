@@ -1,5 +1,5 @@
 <template>
-  <article class="card" role="group" :aria-label="title">
+  <div class="card">
     <div class="card__media">
       <div v-if="!loaded && !error" class="card__placeholder">{{ t('card.loading') }}</div>
 
@@ -31,7 +31,7 @@
     </div>
 
     <h3 class="card__title">{{ title }}</h3>
-  </article>
+  </div>
 </template>
 
 <script setup lang="ts">
