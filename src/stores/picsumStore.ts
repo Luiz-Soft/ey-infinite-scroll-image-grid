@@ -40,7 +40,7 @@ export const usePicsumStore = defineStore('picsum', () => {
 
 
 const removeItemById = (id: PicsumItem['id']): void => {
-  /* this delete would usually be done by on the api side, but picsum doesn't support it.
+  /* this delete would usually be done on the api side, but picsum doesn't support it.
      This is the most performatic way of removing an item from the array locally
   */
   const arr = picsumItems.value
@@ -57,6 +57,6 @@ const removeItemById = (id: PicsumItem['id']): void => {
     page,
     hasMore,
     fetchPicsumItems,
-    removeItemById,
+    removeItemById
   }
 })
