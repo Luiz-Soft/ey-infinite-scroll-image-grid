@@ -3,6 +3,7 @@ import App from './App.vue'
 import router from './router'
 import { createPinia } from 'pinia'
 import i18n from './plugins/i18n'
+import 'vue3-toastify/dist/index.css'
 import './style.css'
 
 const app = createApp(App)
