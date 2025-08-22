@@ -12,7 +12,6 @@ export const usePicsumStore = defineStore('picsum', () => {
   const hasMore: Ref<boolean> = ref(true)
 
   const fetchPicsumItems = async (reset = false): Promise<void> => {
-    if (isLoading.value || (!hasMore.value && !reset)) return
 
     if (reset) {
       page.value = 1
