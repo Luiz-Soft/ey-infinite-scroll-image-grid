@@ -35,21 +35,27 @@
 </template>
 
 <script setup lang="ts">
-import { ref, nextTick } from 'vue'
+import { ref, nextTick, computed } from 'vue'
 import { useI18n } from 'vue-i18n'
 
 interface Props {
   title: string
-  thumbnailUrl: string
+  id: string
 }
 
-const { title, thumbnailUrl } = defineProps<Props>()
+const { title, id } = defineProps<Props>()
 
 const { t } = useI18n()
 
 const loaded = ref(false)
 const error = ref(false)
 const showImg = ref(true)
+
+const baseUrl = import.meta.env.VITE_PICSUM_API_URL
+
+const thumbnailUrl = computed(() => {
+  return `${baseUrl}/id/${id}/150/150`
+})
 
 const onLoad = async (e: Event) => {
   const img = e.target as HTMLImageElement

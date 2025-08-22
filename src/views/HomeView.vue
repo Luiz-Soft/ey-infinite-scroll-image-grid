@@ -4,10 +4,10 @@
 
     <div class="home__grid">
       <card-component
-        v-for="item in placeholderItems"
+        v-for="item in picsumItems"
         :key="item.id"
-        :title="item.title"
-        :thumbnailUrl="item.thumbnailUrl"
+        :id="item.id"
+        :title="item.author"
       />
     </div>
 
@@ -27,24 +27,24 @@
 import { onMounted } from 'vue'
 import { storeToRefs } from 'pinia'
 import { useInfiniteScroll } from '@vueuse/core'
-import { usePlaceholderStore } from '@/stores/placeholderStore'
+import { usePicsumStore } from '@/stores/picsumStore'
 import CardComponent from '@/components/CardComponent.vue'
 import { useI18n } from 'vue-i18n'
 
 const { t } = useI18n()
 
-const store = usePlaceholderStore()
-const { placeholderItems, isLoading, isError, hasMore } = storeToRefs(store)
-const { fetchPlaceholderItems } = store
+const store = usePicsumStore()
+const { picsumItems, isLoading, isError, hasMore } = storeToRefs(store)
+const { fetchPicsumItems } = store
 
 onMounted(() => {
-  fetchPlaceholderItems(true)
+  fetchPicsumItems(true)
 })
 
 useInfiniteScroll(
   window,
   async () => {
-    if (!isLoading.value && hasMore.value) await fetchPlaceholderItems()
+    if (!isLoading.value && hasMore.value) await fetchPicsumItems()
   },
   { distance: 300, interval: 200, canLoadMore: () => hasMore.value }
 )
