@@ -30,7 +30,7 @@ export async function getPicsumItems(
   pageSize = 20
 ): Promise<PicsumResponse> {
   try {
-    const res = await api.get<PicsumItem[]>(`/v2/ist?page=${page}&limit=${pageSize}`)
+    const res = await api.get<PicsumItem[]>(`/v2/list?page=${page}&limit=${pageSize}`)
 
     const linkHeader = res.headers['link'] as string | undefined
     const parsedLinkHeader = linkHeader ? parseLinkHeader(linkHeader) : null
