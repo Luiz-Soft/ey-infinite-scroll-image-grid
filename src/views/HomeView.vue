@@ -7,6 +7,7 @@
       name="card-fade"
       tag="div"
       class="home__grid"
+      appear
     >
       <card-component
         v-for="item in picsumItems"
@@ -118,5 +119,11 @@ useInfiniteScroll(
 }
 .card-fade-move {
   transition: none;
+}
+.card-fade-enter-active {
+  transition: opacity 0.4s ease;
+}
+.card-fade-enter-from {
+  opacity: 0;
 }
 </style>
