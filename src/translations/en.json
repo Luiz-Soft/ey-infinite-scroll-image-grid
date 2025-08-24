@@ -13,5 +13,8 @@
   },
     "header": {
      "title": "Ey smooth Images Grid"
+  },
+   "errors": {
+     "fetch": "Failed to fetch Picsum items"
   }
 }

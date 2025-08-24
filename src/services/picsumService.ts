@@ -1,11 +1,12 @@
 import axios from 'axios'
+import i18n from '@/plugins/i18n'
+import { toast } from 'vue3-toastify'
 import { parseLinkHeader } from '@web3-storage/parse-link-header'
 /*using parseLinkHeader was necessary because picsum api relies on the Link header for pagination, 
 which requires the header to be parsed before it can be used. JSONPlaceHolder API, on the other hand, would not require this,
 since it has a simpler pagination attribute on the header called "x-total-count"
 */
-import { toast } from 'vue3-toastify'
-import 'vue3-toastify/dist/index.css'
+
 
 const api = axios.create({
   baseURL: import.meta.env.VITE_PICSUM_API_URL
@@ -40,7 +41,7 @@ export async function getPicsumItems(
       hasMore: Boolean(parsedLinkHeader?.next)
     }
   } catch (error) {
-    toast.error('⚠️ Failed to fetch Picsum items', {
+    toast.error(i18n.global.t('errors.fetch'), {
       autoClose: 3000,
       position: 'bottom-right'
     })
