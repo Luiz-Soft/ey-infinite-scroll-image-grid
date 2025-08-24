@@ -1,17 +1,17 @@
 {
   "card": {
-    "loading": "Loading…",
-    "errorLoading": "Error loading image.",
-    "retry": "Click to retry"
+    "loading": "Cargando…",
+    "errorLoading": "Error al cargar la imagen.",
+    "retry": "Haz clic para reintentar"
   },
-    "home": {
-     "title": "Home",
-     "error": "Error loading items. Click to retry",
-     "loading": "Loading…",
-     "end": "You’ve reached the end ",
-     "empty": "No items to display. Click to load more"
+  "home": {
+    "title": "Inicio",
+    "error": "Error al cargar los elementos. Haz clic para reintentar",
+    "loading": "Cargando…",
+    "end": "Has llegado al final",
+    "empty": "No hay elementos para mostrar. Haz clic para cargar más"
   },
-    "header": {
-     "title": "Ey Grid de Imágenes"
+  "header": {
+    "title": "Ey Grid de imágenes"
   }
 }

@@ -1,3 +1,17 @@
 {
-"hello-world": "Olá Mundo"
+  "card": {
+    "loading": "Carregando…",
+    "errorLoading": "Erro ao carregar a imagem.",
+    "retry": "Clique para tentar novamente"
+  },
+  "home": {
+    "title": "Início",
+    "error": "Erro ao carregar os itens. Clique para tentar novamente",
+    "loading": "Carregando…",
+    "end": "Você chegou ao fim",
+    "empty": "Nenhum item para exibir. Clique para carregar mais"
+  },
+  "header": {
+    "title": "Ey Grid de Imagens"
+  }
 }
