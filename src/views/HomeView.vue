@@ -21,17 +21,18 @@
 
       <template v-if="isLoading">
         <ContentLoader
-          v-for="n in 5"
+          v-for="n in itemsPerPage"
           :key="`skeleton-${n}`"
           :speed="2"
-          width="100%"
-          height="220"
+          :width="100"
+          :height="220"
+          :viewBox="'0 0 100 220'"
           preserveAspectRatio="none"
-          class="card"
+          class="home__card-skeleton"
           aria-hidden="true"
           data-cy="loading"
         >
-          <rect x="0" y="0" rx="12" ry="12" width="100%" height="220" />
+          <rect x="0" y="0" rx="12" ry="12" width="100" height="220" />
         </ContentLoader>
       </template>
     </div>
@@ -80,7 +81,7 @@ import { ContentLoader } from 'vue-content-loader'
 const { t } = useI18n()
 
 const store = usePicsumStore()
-const { picsumItems, isLoading, isError, hasMore } = storeToRefs(store)
+const { picsumItems, isLoading, isError, hasMore, itemsPerPage } = storeToRefs(store)
 const { fetchPicsumItems, removeItemById } = store
 
 onMounted(() => {
@@ -136,6 +137,10 @@ useInfiniteScroll(
     &--end     { color: #065f46; font-weight: 600; }
     &--error   { color: #991b1b; font-weight: 600; text-decoration: underline; cursor: pointer; }
     &--empty   { color: #374151; font-weight: 500; cursor: pointer; }
+  }
+
+  &__card-skeleton {
+    width: 100%;
   }
 }
 

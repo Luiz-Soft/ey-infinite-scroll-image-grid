@@ -52,6 +52,7 @@ const removeItemById = (id: PicsumItem['id']): void => {
   return {
     isLoading,
     isError,
+    itemsPerPage,
     picsumItems,
     page,
     hasMore,
