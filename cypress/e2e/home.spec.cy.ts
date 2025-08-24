@@ -140,7 +140,7 @@ describe('Home edge cases (E2E)', () => {
     cy.get('[data-cy="card"]').should('have.length', 40)
   })
 
-  it('shows 2 columns on mobile', () => {
+  it('display 2 columns on mobile', () => {
     cy.intercept(
       'GET',
       'https://picsum.photos/v2/list?page=1*',
@@ -162,4 +162,31 @@ describe('Home edge cases (E2E)', () => {
       expect(columns).to.have.length(2)
     })
   })
+
+  it('removes a card when clicking the remove button', () => {
+  cy.intercept(
+    'GET',
+    'https://picsum.photos/v2/list?page=1*',
+    {
+      statusCode: 200,
+      body: sampleItems(3),
+      headers: {
+        Link: '<https://picsum.photos/v2/list?page=2&limit=20>; rel="next"'
+      }
+    }
+  ).as('listPage1')
+
+  cy.visit('/')
+
+  cy.wait('@listPage1')
+  cy.get('[data-cy="card"]').should('have.length', 3)
+
+  cy.get('[data-cy="card"]').first().within(() => {
+    cy.get('[data-cy="remove-card"]').click()
+
+  })
+
+  cy.get('[data-cy="card"]').should('have.length', 2)
+})
+
 })

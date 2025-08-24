@@ -4,6 +4,7 @@
       class="card__close"
       type="button"
       aria-label="Remove card"
+      data-cy="remove-card"
       @click="handleRemove"
     >
       ×
