@@ -94,7 +94,6 @@ const handleRemove = () => emit('remove')
   background: #fff;
   border: 1px solid #0000002b;
   border-radius: 12px;
-  transition: transform .2s ease, box-shadow .2s ease, border-color .2s ease;
 
   &:hover {
     transform: translateY(-4px);
@@ -104,7 +103,7 @@ const handleRemove = () => emit('remove')
 
   &__close {
     position: absolute;
-    top: 0.1rem;
+    top: 0rem;
     right: 0.1rem;
     background: transparent;
     border: none;
@@ -113,9 +112,6 @@ const handleRemove = () => emit('remove')
     cursor: pointer;
     color: #6b7280;
 
-    &:hover {
-      color: #111;
-    }
   }
 
   &__media {
@@ -174,7 +170,6 @@ const handleRemove = () => emit('remove')
     font-size: .95rem;
     font-weight: 600;
     color: #111827;
-    line-height: 1.2;
     min-height: 2.4em;
     overflow: hidden;
     word-break: break-word;
