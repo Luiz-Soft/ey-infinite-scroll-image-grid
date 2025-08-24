@@ -3,10 +3,10 @@ import { ref, type Ref } from 'vue'
 import { getPicsumItems, type PicsumItem } from '@/services/picsumService'
 
 export const usePicsumStore = defineStore('picsum', () => {
+  
+  const picsumItems: Ref<PicsumItem[]> = ref([])
   const isLoading: Ref<boolean> = ref(false)
   const isError: Ref<boolean> = ref(false)
-  const picsumItems: Ref<PicsumItem[]> = ref([])
-
   const page: Ref<number> = ref(1)
   const itemsPerPage: Ref<number> = ref(20)
   const hasMore: Ref<boolean> = ref(true)
