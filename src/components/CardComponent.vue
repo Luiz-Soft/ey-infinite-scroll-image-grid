@@ -44,17 +44,12 @@
 </template>
 
 <script setup lang="ts">
-import { ref, nextTick, computed } from 'vue'
+import { ref, nextTick } from 'vue'
 import { useI18n } from 'vue-i18n'
+import { usePicsumThumbnail } from '@/composables/usePicsumUtils'
 
-const emit = defineEmits<{
-  (e: 'remove'): void
-}>()
-
-interface Props {
-  title: string
-  id: string
-}
+const emit = defineEmits<{ (e: 'remove'): void }>()
+interface Props { title: string; id: string }
 const { title, id } = defineProps<Props>()
 const { t } = useI18n()
 
@@ -62,8 +57,7 @@ const loaded = ref(false)
 const error = ref(false)
 const showImg = ref(true)
 
-const baseUrl = import.meta.env.VITE_PICSUM_API_URL
-const thumbnailUrl = computed(() => `${baseUrl}/id/${id}/150/150`)
+const thumbnailUrl = usePicsumThumbnail(id)
 
 const onLoad = async (e: Event) => {
   const img = e.target as HTMLImageElement
@@ -85,9 +79,7 @@ const retryImage = async () => {
   showImg.value = true
 }
 
-const handleRemove = () => {
-  emit('remove')
-}
+const handleRemove = () => emit('remove')
 </script>
 
 
