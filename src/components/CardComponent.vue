@@ -94,6 +94,7 @@ const handleRemove = () => emit('remove')
   background: #fff;
   border: 1px solid #0000002b;
   border-radius: 12px;
+  transition: all 0.2s ease;
 
   &:hover {
     transform: translateY(-4px);
