@@ -2,23 +2,39 @@
   <section class="home" data-cy="home">
     <h1 class="home__title" data-cy="home-title">{{ t('home.title') }}</h1>
 
-    <transition-group
-      v-if="picsumItems.length"
-      name="card-fade"
-      tag="div"
-      class="home__grid"
-      data-cy="grid"
-      appear
-    >
-      <card-component
-        v-for="item in picsumItems"
-        :key="item.id"
-        :id="item.id"
-        :title="item.author"
-        data-cy="card"
-        @remove="removeItemById(item.id)"
-      />
-    </transition-group>
+    <div v-if="picsumItems.length || isLoading" class="home__grid" data-cy="grid">
+      <transition-group
+        name="card-fade"
+        tag="div"
+        class="home__grid-wrapper"
+        appear
+      >
+        <card-component
+          v-for="item in picsumItems"
+          :key="`card-${item.id}`"
+          :id="item.id"
+          :title="item.author"
+          data-cy="card"
+          @remove="removeItemById(item.id)"
+        />
+      </transition-group>
+
+      <template v-if="isLoading">
+        <ContentLoader
+          v-for="n in 5"
+          :key="`skeleton-${n}`"
+          :speed="2"
+          width="100%"
+          height="220"
+          preserveAspectRatio="none"
+          class="card"
+          aria-hidden="true"
+          data-cy="loading"
+        >
+          <rect x="0" y="0" rx="12" ry="12" width="100%" height="220" />
+        </ContentLoader>
+      </template>
+    </div>
 
     <div
       v-else-if="!isLoading && !isError"
@@ -42,16 +58,15 @@
       {{ t('home.error') }}
     </div>
 
-    <p v-if="isLoading" class="home__status home__status--loading" data-cy="loading">
-      {{ t('home.loading') }}
-    </p>
-    <p v-else-if="!hasMore && picsumItems.length" class="home__status home__status--end" data-cy="end">
-
+    <p
+      v-else-if="!hasMore && picsumItems.length"
+      class="home__status home__status--end"
+      data-cy="end"
+    >
       {{ t('home.end') }}
     </p>
   </section>
 </template>
-
 
 <script setup lang="ts">
 import { onMounted } from 'vue'
@@ -60,6 +75,7 @@ import { useInfiniteScroll } from '@vueuse/core'
 import { usePicsumStore } from '@/stores/picsumStore'
 import CardComponent from '@/components/CardComponent.vue'
 import { useI18n } from 'vue-i18n'
+import { ContentLoader } from 'vue-content-loader'
 
 const { t } = useI18n()
 
@@ -107,6 +123,10 @@ useInfiniteScroll(
     @media (min-width: 1024px) { grid-template-columns: repeat(5, 1fr); }
   }
 
+  &__grid-wrapper {
+    display: contents;
+  }
+
   &__status {
     text-align: center;
     margin-top: 1rem;
@@ -116,7 +136,6 @@ useInfiniteScroll(
     &--end     { color: #065f46; font-weight: 600; }
     &--error   { color: #991b1b; font-weight: 600; text-decoration: underline; cursor: pointer; }
     &--empty   { color: #374151; font-weight: 500; cursor: pointer; }
-
   }
 }
 
