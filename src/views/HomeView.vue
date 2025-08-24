@@ -1,12 +1,13 @@
 <template>
-  <section class="home">
-    <h1 class="home__title">{{ t('home.title') }}</h1>
+  <section class="home" data-cy="home">
+    <h1 class="home__title" data-cy="home-title">{{ t('home.title') }}</h1>
 
     <transition-group
       v-if="picsumItems.length"
       name="card-fade"
       tag="div"
       class="home__grid"
+      data-cy="grid"
       appear
     >
       <card-component
@@ -14,6 +15,7 @@
         :key="item.id"
         :id="item.id"
         :title="item.author"
+        data-cy="card"
         @remove="removeItemById(item.id)"
       />
     </transition-group>
@@ -21,28 +23,30 @@
     <div
       v-else-if="!isLoading && !isError"
       class="home__status home__status--empty"
+      data-cy="empty"
       role="button"
       tabindex="0"
       @click="fetchPicsumItems(true)"
     >
-     {{ t('home.empty') }}
+      {{ t('home.empty') }}
     </div>
 
     <div
       v-if="isError"
       class="home__status home__status--error"
+      data-cy="error"
       role="button"
       tabindex="0"
-      @click="fetchPicsumItems()"
+      @click="fetchPicsumItems(true)"
     >
       {{ t('home.error') }}
     </div>
 
-    <p v-if="isLoading" class="home__status home__status--loading">
+    <p v-if="isLoading" class="home__status home__status--loading" data-cy="loading">
       {{ t('home.loading') }}
     </p>
+    <p v-else-if="!hasMore && picsumItems.length" class="home__status home__status--end" data-cy="end">
 
-    <p v-else-if="!hasMore && picsumItems.length" class="home__status home__status--end">
       {{ t('home.end') }}
     </p>
   </section>
