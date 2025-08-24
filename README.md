@@ -1,6 +1,6 @@
 # Vue 3 + TypeScript + Vite
 
-A simple Vue 3 app built with Vite and TypeScript
+A simple Vue 3 app built with Vite and TypeScript.
 
 ## ⚙️ Requirements
 
@@ -9,7 +9,13 @@ A simple Vue 3 app built with Vite and TypeScript
 
 ## 🚀 Setup
 
+### Run the application
+
 ```bash
 nvm use 20
 npm install
 npm run dev
+
+### Run the tests
+npm run dev
+npx cypress open
