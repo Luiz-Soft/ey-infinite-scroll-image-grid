@@ -38,7 +38,7 @@
     </div>
 
     <div
-      v-else-if="!isLoading && !isError"
+      v-else-if="!isLoading && !isError && !picsumItems.length"
       class="home__status home__status--empty"
       data-cy="empty"
       role="button"
