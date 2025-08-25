@@ -90,15 +90,11 @@ onMounted(() => {
 
 useInfiniteScroll(
   window,
-  async () => {
-    if (!isLoading.value && hasMore.value && !isError.value) {
-      await fetchPicsumItems()
-    }
-  },
+  () => fetchPicsumItems(),
   {
     distance: 300,
     interval: 200,
-    canLoadMore: () => hasMore.value && !isError.value
+    canLoadMore: () => !isLoading.value && hasMore.value && !isError.value
   }
 )
 </script>
